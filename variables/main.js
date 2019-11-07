@@ -11,7 +11,7 @@ console.log((algebra + geography + physics) / 3);
 
 let myName = 'Саша';
 
-console.log("Привет, мир! Меня зовут " + myName);
+console.log(`Привет, мир! Меня зовут ${myName}`);
 
 // третья задача
 
