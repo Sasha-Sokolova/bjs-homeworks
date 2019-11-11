@@ -11,20 +11,20 @@ function calculateQuadraticEquation(){
 }
 
 function getResult(a,b,c){
-    let y = Math.pow(b,2) - 4 * a * c;
-    if (y < 0){
-        let x = 'Дискриминат  меньше нуля, корней нет.';
-        console.log('Дискриминат  меньше нуля, корней нет.');
-        return x; 
-    } else if (y == 0){
-        let x = - b / (2 *a);
-        return x;
-    } else {
-        let x = (- b + Math.sqrt(d))/ (2 *a);
-        let x2 = (- b - Math.sqrt(d))/ (2 *a);
-        return [x, ` x2= ${x2}`];   
-    } 
+    let discr = b ** 2 - 4 * a * c;
+  let result = [];
+  if (discr > 0) {
+    result.push((-b - Math.sqrt(discr)) / (2 * a));
+    result.push((-b + Math.sqrt(discr)) / (2 * a));
+  } else if (discr == 0) {
+    result.push(-b / (2 * a));
+  } else {
+    console.log('Нет корней!');
+  }
+  return result;
 }
+    
+
 
 function calculateAverageRating(){
     let marks = window.marks.value.split("").map(Number).filter((n)=> !isNaN(n) && n > 0);
@@ -33,22 +33,19 @@ function calculateAverageRating(){
 }
 
 function getAverageMark(marks){
-    let arr = marks;
     let sum = 0;
     let maximum = 5;
 
-    if (arr.length >= maximum) {
-        arr.splice(maximum);
+    if (marks.length >= maximum) {
+        marks.splice(maximum);
         console.log(`Количество оценок больше ${maximum}`);
     }
 
-    for (let i = 0; i < arr.length; i++) {
-        sum += arr[i];
+    for (let i = 0; i < marks.length; i++) {
+        sum += marks[i];
     }
-
-    let averageMark = sum / arr.length;
     
-    return averageMark;
+    return sum / marks.length;
 }
 
 function calculateDrinkTask(){
@@ -63,7 +60,7 @@ function askDrink(name,dateOfBirthday){
     let today = new Date();
     let year = today.getFullYear();
     let age = year - date;
-    let result = '';
+    let result;
     if (age >= 18) {
         result =`Не желаете ли олд-фэшн, ${name} ?`;
     } else {
