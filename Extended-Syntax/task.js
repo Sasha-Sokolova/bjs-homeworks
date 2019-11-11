@@ -11,12 +11,12 @@ function calculateQuadraticEquation(){
 }
 
 function getResult(a,b,c){
-    let discr = b ** 2 - 4 * a * c;
+    let discriminant = b ** 2 - 4 * a * c;
   let result = [];
-  if (discr > 0) {
-    result.push((-b - Math.sqrt(discr)) / (2 * a));
-    result.push((-b + Math.sqrt(discr)) / (2 * a));
-  } else if (discr == 0) {
+  if (discriminant > 0) {
+    result.push((-b - Math.sqrt(discriminant)) / (2 * a));
+    result.push((-b + Math.sqrt(discriminant)) / (2 * a));
+  } else if (discriminant == 0) {
     result.push(-b / (2 * a));
   } else {
     console.log('Нет корней!');
