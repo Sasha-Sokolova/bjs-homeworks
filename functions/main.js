@@ -33,32 +33,38 @@ function getSolutions( a, b, c ) {
 
 
   function getAverageScore(data) {
-    let arr = [];
-    let count = 0;
     let sum = 0;
-
+    let count = 0;
+    let resultObject = {};
+    
     for (let prop in data) {
-        count++;
-    for (let i = 0; i < data[prop].length; i++){
-      sum += data[prop][i];
-    };
-    let average = sum / data[prop].length;
-    arr.push(average);
-    console.log(prop + ': ' + average);
+      
+      function propAverage(arr) {
+        let sumProp = 0;
+        for (let i = 0; i < arr.length; i++){
+          sumProp += arr[i];
+        }
+  
+        let resultAverage = sumProp / arr.length;
+        
+        return resultAverage;
+      }
+  
+      resultObject[prop] = propAverage(data[prop]);
+      sum += propAverage(data[prop]);
+      count ++;
+    }
+  
+  let avg = sum / count;
+  resultObject['average'] = avg;
+  return resultObject;
   }
-  for (let i = 0; i < arr.length; i++){
-    sum += arr[i];
-  }
-  let average = sum/count;
-  return 'average: ' + average;
-
-}
-
-  getAverageScore ({
-    algebra : [5,4,4],
-    russian: [2,1,3],
-    literature: [4,5,6,4],
-    english: [3, 4 ,4,5]
+  
+  getAverageScore({
+    algebra : [5,5, 5],
+    russian: [2,2, 2],
+    english: [3,3,3],
+    literature: [4, 4, 4]
   });
 
 
