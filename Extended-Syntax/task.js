@@ -1,18 +1,28 @@
 "use strict";
 
-function calculateQuadraticEquation(){
-    let a = +window.a.value;
-    let b = +window.b.value;
-    let c = +window.c.value;
-    let result = getResult(a,b,c);
-    window.equation.textContent = `${a}*x^2 + (${b})*x + (${c}) = 0`;
-    let span = window.result;
-    span.textContent = "х = "+result;
-}
+/* Наш знакомый школьник Вася с вашей помощью разобрался как решать несложные примеры при помощи программ. А как быть с квадратными уравнениями? Ему опять потребовалась ваша помощь: напишите программу, которая решит квадратное уравнение 2x^2+4x-3=0.
 
-function getResult(a,b,c){
-    let discriminant = b ** 2 - 4 * a * c;
+Процесс реализации:
+Активируйте строгий режим соответствия.
+
+Реализуйте функцию getResult(), которая принимает 3 аргумента: a, b,c - коэффициенты квадратного уравнения.
+
+Вычислите дискриминант для решения уравнения. Для возведения в степень используйте оператор - ** или функцию Math.pow().
+
+Результатом функции должен быть массив.
+
+Если дискриминант меньше нуля, то корней нет. (пустой массив)
+
+Если дискриминант равен нулю, то корень один. Его необходимо вычислить и вернуть из функции. (массив с одним корнем).
+
+Если дискриминант больше нуля, то существует 2 решения уравнения. Их необходимо вычислить и вернуть из функции. (массив с двумя корнями).
+
+*/
+
+function getResult(a,b,c) {
+  let discriminant = b ** 2 - 4 * a * c;
   let result = [];
+
   if (discriminant > 0) {
     result.push((-b - Math.sqrt(discriminant)) / (2 * a));
     result.push((-b + Math.sqrt(discriminant)) / (2 * a));
@@ -23,40 +33,65 @@ function getResult(a,b,c){
   }
   return result;
 }
-    
 
 
-function calculateAverageRating(){
-    let marks = window.marks.value.split("").map(Number).filter((n)=> !isNaN(n) && n > 0);
-    let averageMark = getAverageMark(marks);
-    window.averageMark.textContent = averageMark;
-}
+getResult(-5, -2, 3);
+
+
+
+/*Программа, которой Мария Степановна пользовалась для подсчета оценок, произвела фурор среди ее коллег! Только вот незадача, она может рассчитать только среднюю оценку только если оценок было три. Расширьте программу так, чтобы она принимала массив, в котором может быть не больше 5 оценок, а может и меньше (оценка, если ее не поставили, не будет считаться). На выходе программа должна выдавать среднюю отметку. Если аргументов больше 5, вывести это на консоль, и считать только первые 5.
+
+Процесс реализации:
+Реализуйте функцию getAverageMark(), которая принимает 1 аргумент marks, который содержит оценки. (В поле для ввода вводить положительный набор цифр, разделенных пробелом или запятой).
+
+Проверить количество введенных оценок.
+
+Если оценок нет и массив пустой, то нет смысла считать среднюю оценку: просто верните 0.
+
+Если количество оценок больше 5, то вывести соответствующую информацию на консоль, а так же обрезать исходный массив. Для обрезания массива можно использовать методы slice или splice
+
+Накапливать сумму всех оценок.
+
+Вернуть из функции среднее значение оценок, тоесть результат деления суммы оценок на их количество
+
+Избегайте дублирования логики и любого копипаста */
 
 function getAverageMark(marks){
+  console.log(marks.length);
+  if (marks.length === 0) {
+    return marks;
+  }
+  if (marks.length > 5) {
+    console.log("Больше 5 элементов в массиве");
+    let slicing = marks.slice(0, 5);
+    console.log(slicing);
+  }
+  else {
     let sum = 0;
-    let maximum = 5;
+    for (i = 0; i < marks.length; i++) {
+      sum += marks[i];
+      let final = sum / marks.length;
 
-    if (marks.length >= maximum) {
-        marks.splice(maximum);
-        console.log(`Количество оценок больше ${maximum}`);
     }
-
-    for (let i = 0; i < marks.length; i++) {
-        sum += marks[i];
-    }
-    
-    return sum / marks.length;
+  }
+  
 }
 
-function calculateDrinkTask(){
-    let name = window.personName.value;
-    let dateOfBirthday = new Date(window.dateOfBirthday.value);
-    let drink = askDrink(name, dateOfBirthday);
-    window.drink.textContent = drink;
-}
+getAverageMark([1, 5, 3, 2, 6])
 
-function askDrink(name,dateOfBirthday){
-    let date = dateOfBirthday.getFullYear();
+/* Напишите программу для бармена-андроида Арчи. Программа должна принимать имя пользователя и год рождения. Если пользователь старше 18 лет, то программа должна выводить на экран текст “Не желаете ли олд-фэшн, <имя пользователя>?”, а если младше, то: “Сожалею, <имя пользователя>, но я не могу вам продать алкоголь. Могу предложить вам замечательный клюквенный компот!”
+
+Процесс реализации:
+Реализуйте функцию askDrink(), которая принимает 2 аргумента: name и dateOfBirthday.
+
+Расчитайте возраст пользователя. (Для получения года из даты воспользуйтесь функцией getFullYear()).
+
+Для получения текущей даты создайте объект new Date().
+
+Вернуть из функции результирующую строку.*/
+
+function askDrink(name, dateOfBirthday) {
+  let date = dateOfBirthday.getFullYear();
     let today = new Date();
     let year = today.getFullYear();
     let age = year - date;
@@ -69,3 +104,5 @@ function askDrink(name,dateOfBirthday){
     console.log(result);
     return result;
 }
+
+askDrink("Peter", "July 21, 1983");
